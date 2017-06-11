@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">AssignmentSpotSoon</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="home">HOME</string>
+    <string name="video">VIDEOS</string>
+    <string name="images">IMAGES</string>
+    <string name="milestone">MILESTONE</string>
+
+
+</resources>
