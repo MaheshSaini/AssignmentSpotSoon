@@ -4,21 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.assignment.spotsoon.R;
+import com.assignment.spotsoon.adapter.ViewPagerAdapter;
 import com.assignment.spotsoon.adapter.ViewPagerIndicatorAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -40,7 +35,6 @@ public class MainFragment extends Fragment implements ViewPager.OnPageChangeList
     LinearLayout viewPagerCountDots;
     private ViewPagerIndicatorAdapter mAdapter;
 
-
     private int[] mImageResources = {
             R.drawable.bg,
             R.drawable.bg,
@@ -55,11 +49,46 @@ public class MainFragment extends Fragment implements ViewPager.OnPageChangeList
         View layout = inflater.inflate(R.layout.main_fragment, container, false);
         ButterKnife.inject(this, layout);
         setReference();
+        viewPager.setOffscreenPageLimit(3);
         setupViewPager(viewPager);
         pager_introduction.setCurrentItem(0);
         pager_introduction.setOnPageChangeListener(this);
-        tabs.setupWithViewPager(viewPager);
-        setupTabIcons();
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition(),false);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tabs.getTabAt(position).select();
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         return layout;
     }
 
@@ -70,29 +99,6 @@ public class MainFragment extends Fragment implements ViewPager.OnPageChangeList
         adapter.addFragment(new VideosFragment(), "MILESTONE");
         viewPager.setAdapter(adapter);
 
-    }
-
-    private void setupTabIcons() {
-
-        TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabOne.setText("VIDEOS");
-
-        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.select_video, 0, 0);
-        tabOne.setCompoundDrawablePadding(10);
-        tabs.getTabAt(0).setCustomView(tabOne);
-
-        TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("IMAGES");
-        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.select_image, 0, 0);
-        tabOne.setCompoundDrawablePadding(10);
-        tabs.getTabAt(1).setCustomView(tabTwo);
-
-        TextView tabThree = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabThree.setText("MILESTONE");
-        tabOne.setCompoundDrawablePadding(10);
-        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.select_milestone, 0, 0);
-
-        tabs.getTabAt(2).setCustomView(tabThree);
     }
 
     public void setReference() {
@@ -127,7 +133,6 @@ public class MainFragment extends Fragment implements ViewPager.OnPageChangeList
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
-
     @Override
     public void onPageSelected(int position) {
         for (int i = 0; i < dotsCount; i++) {
@@ -148,35 +153,5 @@ public class MainFragment extends Fragment implements ViewPager.OnPageChangeList
 
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
 }
 

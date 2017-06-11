@@ -44,7 +44,25 @@
             android:layout_height="55dp"
             android:layout_gravity="center"
             app:tabGravity="fill"
-            app:tabMode="fixed" />
+            app:tabMode="fixed" >
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab1"
+                android:icon="@drawable/tab_video_selector"
+                style="@style/tab_item"
+                android:text="@string/video" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab2"
+                android:icon="@drawable/tab_image_selector"
+                style="@style/tab_item"
+                android:text="@string/images" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab3"
+                android:icon="@drawable/tab_milestone_selector"
+                style="@style/tab_item"
+                android:text="@string/milestone" />
+            </android.support.design.widget.TabLayout>>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
