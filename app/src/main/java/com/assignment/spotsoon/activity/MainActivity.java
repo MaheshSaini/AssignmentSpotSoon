@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import com.assignment.spotsoon.R;
 import com.assignment.spotsoon.fragment.MainFragment;
 
-
+///Hello Mahesh Sainia
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     @Override
